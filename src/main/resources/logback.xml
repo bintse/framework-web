@@ -1,0 +1,102 @@
+<?xml version= "1.0" encoding ="UTF-8"?>
+<configuration>
+  <!-- 日志文件基本路径 -->
+  <property name="LOG_PATH_BASE" value="logs/tsp-dflzm" />
+  <!-- 日志文件后缀名 -->
+  <property name="LOG_FILE_SUFFIX" value="txt" />
+
+  <property name="ENCODER_PATTERN" value="%date [%thread] %-5level %logger{36} - %msg%n" />
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <target>System.out</target>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR </level>
+      <onMatch>DENY </onMatch>
+      <onMismatch>ACCEPT </onMismatch>
+    </filter>
+    <encoder>
+      <pattern>
+        ${ENCODER_PATTERN}
+      </pattern>
+    </encoder>
+  </appender>
+
+  <appender name="consoleError" class="ch.qos.logback.core.ConsoleAppender">
+    <target>System.err </target>
+    <!-- encoder 可以指定字符集，对于中文输出有意义 -->
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR </level>
+      <onMatch>ACCEPT </onMatch>
+      <onMismatch>DENY </onMismatch>
+    </filter>
+    <encoder>
+      <pattern>
+        ${ENCODER_PATTERN}
+      </pattern>
+    </encoder>
+  </appender>
+
+  <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_PATH_BASE}.${LOG_FILE_SUFFIX} </file>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR </level>
+      <onMatch>DENY </onMatch>
+      <onMismatch>ACCEPT </onMismatch>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- rollover daily -->
+      <fileNamePattern> ${LOG_PATH_BASE}-%d{yyyy-MM-dd}.${LOG_FILE_SUFFIX}</fileNamePattern>
+      <maxHistory>30 </maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>
+        ${ENCODER_PATTERN}
+      </pattern>
+    </encoder>
+  </appender>
+
+  <appender name="rollingFileError" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file> ${LOG_PATH_BASE}-error.${LOG_FILE_SUFFIX}</file>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR </level>
+      <onMatch>ACCEPT </onMatch>
+      <onMismatch>DENY </onMismatch>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- rollover daily -->
+      <fileNamePattern> ${LOG_PATH_BASE}-error-%d{yyyy-MM-dd}.${LOG_FILE_SUFFIX}</fileNamePattern>
+      <maxHistory>30 </maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>
+        ${ENCODER_PATTERN}
+      </pattern>
+    </encoder>
+  </appender>
+
+  <!-- project default level -->
+  <logger name="cn.com.dflzm" level="DEBUG" />
+
+  <!--log4jdbc -->
+  <!-- <logger name="jdbc.sqltiming" level="INFO"/> -->
+
+  <!-- 输出到控制台和文件，可定义更多的 Appender -->
+  <root level="DEBUG">
+    <appender-ref ref="console" />
+    <appender-ref ref="consoleError" />
+    <appender-ref ref="rollingFile" />
+    <appender-ref ref="rollingFileError" />
+  </root>
+
+  <!-- 下面配置一些第三方包的日志过滤级别，用于避免刷屏 -->
+  <logger name="org.hibernate" level="WARN" />
+  <logger name="org.springframework" level="WARN" />
+  <logger name="com.opensymphony" level="WARN" />
+  <logger name="org.apache" level="WARN" />
+
+  <!-- show parameters for hibernate sql 专为 Hibernate 定制 -->
+  <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />
+  <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG" />
+  <logger name="org.hibernate.SQL" level="DEBUG" />
+  <logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />
+  <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />
+</configuration>

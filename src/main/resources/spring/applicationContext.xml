@@ -1,0 +1,28 @@
+<?xml version= "1.0" encoding ="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+  <!-- 打开Spring的Annotation支持 -->
+  <context:annotation-config />
+
+  <!-- 加载配置文件 -->
+  <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+      <list>
+        <!-- dao properties -->
+        <value>classpath:config/jdbc.properties</value>
+      </list>
+    </property>
+  </bean>
+
+  <!-- 设定Spring 去哪些包中找Annotation -->
+  <context:component-scan base-package="cn.com.dflzm">
+    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+  </context:component-scan>
+
+  <!-- dao相关配置 -->
+  <import resource="applicationContext-dao.xml" />
+
+</beans>
