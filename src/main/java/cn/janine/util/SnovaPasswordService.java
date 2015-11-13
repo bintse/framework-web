@@ -1,4 +1,4 @@
-package cn.janine.dflzm.shiro;
+package cn.janine.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.credential.PasswordService;
