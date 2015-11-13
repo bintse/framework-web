@@ -5,7 +5,7 @@
   <display-name>framework-web</display-name>
 
   <listener>
-    <description>防止发生java.beans.Introspector内存溢出，应配置在与Spring现骨干监听器中的第一个位置（也要在ContextLoaderListener的前面）</description>
+    <description>防止java.beans.Introspector内存溢出，应配置在与Spring现骨干监听器中的第一个位置（也要在ContextLoaderListener的前面）</description>
     <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
   </listener>
 
@@ -90,5 +90,16 @@
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>
+  
+  <!-- Kaptcha 验证码 -->
+	<servlet>
+		<servlet-name>Kaptcha</servlet-name>
+		<servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Kaptcha</servlet-name>
+		<url-pattern>/Kaptcha.jpg</url-pattern>
+	</servlet-mapping>
 
 </web-app>

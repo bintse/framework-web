@@ -37,7 +37,7 @@
   </bean>
 
   <!-- Spring Data Jpa配置 , 扫描base-package下所有继承于Repository<T,ID>的接口 -->
-  <jpa:repositories base-package="cn.com.dflzm.**.repository" transaction-manager-ref="transactionManager"
+  <jpa:repositories base-package="cn.janine.**.repository" transaction-manager-ref="transactionManager"
     entity-manager-factory-ref="entityManagerFactory" />
 
   <!-- Jpa Entity Manager 配置 -->
@@ -45,7 +45,7 @@
     depends-on="dataSource">
     <property name="dataSource" ref="dataSource" />
     <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
-    <property name="packagesToScan" value="cn.com.dflzm.**.entity" />
+    <property name="packagesToScan" value="cn.janine.**.entity" />
     <property name="jpaProperties">
       <props>
         <prop key="hibernate.current_session_context_class">thread</prop>
@@ -78,7 +78,7 @@
   <aop:config>
     <!-- 设置pointCut表示哪些方法要加入事务处理 -->
     <!-- 以下的事务是声明在DAO中，但是通常都会在Service来处理多个业务对象逻辑的关系，注入删除，更新等，此时如果在执行了一个步骤之后抛出异常 就会导致数据不完整，所以事务不应该在DAO层处理，而应该在service，这也就是Spring所提供的一个非常方便的工具，声明式事务 -->
-    <aop:pointcut id="allMethods" expression="execution(* cn.com.dflzm.**.service.**.*(..))" />
+    <aop:pointcut id="allMethods" expression="execution(* cn.janine.**.service.**.*(..))" />
     <!-- 通过advisor来确定具体要加入事务控制的方法 -->
     <aop:advisor advice-ref="txAdvice" pointcut-ref="allMethods" />
   </aop:config>

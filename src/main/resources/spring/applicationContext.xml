@@ -1,28 +1,67 @@
 <?xml version= "1.0" encoding ="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-  <!-- 打开Spring的Annotation支持 -->
-  <context:annotation-config />
+	<!-- 打开Spring的Annotation支持 -->
+	<context:annotation-config />
 
-  <!-- 加载配置文件 -->
-  <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    <property name="locations">
-      <list>
-        <!-- dao properties -->
-        <value>classpath:config/jdbc.properties</value>
-      </list>
-    </property>
-  </bean>
+	<!-- 加载配置文件 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<!-- dao properties -->
+				<value>classpath:config/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
 
-  <!-- 设定Spring 去哪些包中找Annotation -->
-  <context:component-scan base-package="cn.com.dflzm">
-    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-    <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
-  </context:component-scan>
+	<!-- 设定Spring 去哪些包中找Annotation -->
+	<context:component-scan base-package="cn.janine">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
 
-  <!-- dao相关配置 -->
-  <import resource="applicationContext-dao.xml" />
+	<!-- dao相关配置 -->
+	<import resource="applicationContext-dao.xml" />
+
+	<!-- 验证码 -->
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+		<property name="config">
+			<bean class="com.google.code.kaptcha.util.Config">
+				<constructor-arg>
+					<props>
+						<!-- 验证码宽度 -->
+						<prop key="kaptcha.image.width">100</prop>
+						<!-- 验证码高度 -->
+						<prop key="kaptcha.image.height">40</prop>
+						<!-- 生成验证码内容范围 -->
+						<prop key="kaptcha.textproducer.char.string">0123456789</prop>
+						<!-- 验证码个数 -->
+						<prop key="kaptcha.textproducer.char.length">4</prop>
+						<!-- 是否有边框 -->
+						<prop key="kaptcha.border">yes</prop>
+						<!-- 边框颜色 -->
+						<prop key="kaptcha.border.color">105,179,90</prop>
+						<!-- 边框厚度 -->
+						<prop key="kaptcha.border.thickness">1</prop>
+						<!-- 验证码字体颜色 -->
+						<prop key="kaptcha.textproducer.font.color">red</prop>
+						<!-- 验证码字体大小 -->
+						<prop key="kaptcha.textproducer.font.size">35</prop>
+						<!-- 验证码所属字体样式 -->
+						<prop key="kaptcha.textproducer.font.names">BKamrnBd</prop>
+						<!-- 干扰线颜色 -->
+						<prop key="kaptcha.noise.color">blue</prop>
+						<!-- 验证码文本字符间距 -->
+						<prop key="kaptcha.textproducer.char.space">4</prop>
+					</props>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
 
 </beans>

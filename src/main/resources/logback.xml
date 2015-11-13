@@ -1,7 +1,7 @@
 <?xml version= "1.0" encoding ="UTF-8"?>
 <configuration>
   <!-- 日志文件基本路径 -->
-  <property name="LOG_PATH_BASE" value="logs/tsp-dflzm" />
+  <property name="LOG_PATH_BASE" value="logs/janine" />
   <!-- 日志文件后缀名 -->
   <property name="LOG_FILE_SUFFIX" value="txt" />
 
@@ -74,7 +74,7 @@
   </appender>
 
   <!-- project default level -->
-  <logger name="cn.com.dflzm" level="DEBUG" />
+  <logger name="cn.janine" level="DEBUG" />
 
   <!--log4jdbc -->
   <!-- <logger name="jdbc.sqltiming" level="INFO"/> -->
